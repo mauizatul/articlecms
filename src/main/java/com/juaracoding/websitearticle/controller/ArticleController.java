@@ -38,7 +38,9 @@ public class ArticleController {
         this.categoryArticleService = categoryArticleService;
     }
 
-    // display list of article
+    /*
+    Menampilkan daftar artikel
+     */
     @GetMapping("/show")
     public String showArticles(Model model, WebRequest request) {
         if(OtherConfig.getFlagSessionValidation().equals("y"))
@@ -51,6 +53,9 @@ public class ArticleController {
         return findPaginated(1, "idArticle", "asc", model,request);
     }
 
+    /*
+    Menampilkan daftar form artikel
+     */
     @GetMapping("/showNewArticleForm")
     public String showNewArticleForm(Model model, WebRequest request) {
         mappingAttribute.setAttribute(model,objectMapper,request);//untuk set session
@@ -65,6 +70,9 @@ public class ArticleController {
         return "article/create_article";
     }
 
+    /*
+    Menyimpan artikel yang sudah dibuat di form artikel
+     */
     @PostMapping("/saveArticle")
     public String saveArticle(@ModelAttribute("article") Article article,Model model, WebRequest request) {
         if(request.getAttribute("USR_ID",1)==null){
@@ -80,6 +88,9 @@ public class ArticleController {
         return "redirect:/api/article/show";
     }
 
+    /*
+    Menampilkan form artikel yang akan diedit
+     */
     @GetMapping("/update/{id}")
     public String editArticleForm(@PathVariable("id") Long Id, Model model, WebRequest request) {
         if(OtherConfig.getFlagSessionValidation().equals("y")) {
@@ -93,6 +104,9 @@ public class ArticleController {
         return "article/update_article";
     }
 
+    /*
+    Menyimpan artikel yang sudah diedit di form update artikel
+     */
     @PostMapping("/update/{id}")
     public String updateArticle(@PathVariable("id") Long id,
                                 @ModelAttribute("article") Article article,
@@ -118,6 +132,9 @@ public class ArticleController {
         return "redirect:/api/article/show";
     }
 
+    /*
+    Menampilkan daftar artikel per halaman
+     */
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,

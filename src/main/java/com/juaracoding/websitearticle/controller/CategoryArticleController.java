@@ -43,7 +43,9 @@ public class CategoryArticleController {
         this.categoryArticleService = categoryArticleService;
     }
 
-    // display list of category
+    /*
+    Menampilkan daftar kategori
+     */
     @GetMapping("/show")
     public String showCategories(Model model, WebRequest request) {
         if(OtherConfig.getFlagSessionValidation().equals("y"))
@@ -56,6 +58,9 @@ public class CategoryArticleController {
         return findPaginated(1, "idCategoryArticle", "asc", model,request);
     }
 
+    /*
+    Menampilkan daftar form kategori
+     */
     @GetMapping("/showNewCategoryForm")
     public String showNewCategoryForm(Model model, WebRequest request) {
         mappingAttribute.setAttribute(model,objectMapper,request);//untuk set session
@@ -69,6 +74,9 @@ public class CategoryArticleController {
         return "category/create_category";
     }
 
+    /*
+    Menyimpan kategori yang sudah dibuat di form kategori
+     */
     @PostMapping("/saveCategory")
     public String saveCategory(@ModelAttribute("categoryArticle") CategoryArticle categoryArticle,Model model, WebRequest request) {
         if(request.getAttribute("USR_ID",1)==null){
@@ -84,6 +92,9 @@ public class CategoryArticleController {
         return "redirect:/api/category/show";
     }
 
+    /*
+    Menampilkan form kategori yang akan diedit
+     */
     @GetMapping("/update/{id}")
     public String editCategoryForm(@PathVariable("id") Long Id, Model model, WebRequest request) {
         if(OtherConfig.getFlagSessionValidation().equals("y")) {
@@ -96,6 +107,9 @@ public class CategoryArticleController {
         return "category/update_category";
     }
 
+    /*
+    Menyimpan kategori yang sudah diedit di form update kategori
+     */
     @PostMapping("/update/{id}")
     public String updateCategory(@PathVariable("id") Long id,
                                 @ModelAttribute("categoryArticle") CategoryArticle categoryArticle,
@@ -117,6 +131,9 @@ public class CategoryArticleController {
         return "redirect:/api/category/show";
     }
 
+    /*
+    Menampilkan daftar kategori per halaman
+     */
     @GetMapping("/page/{pageNo}")
     public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
                                 @RequestParam("sortField") String sortField,
